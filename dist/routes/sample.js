@@ -3,9 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const express_1 = __importDefault(require("express"));
-const sample_1 = __importDefault(require("../controllers/sample"));
+const buy_1 = __importDefault(require("../controllers/buy"));
 const router = express_1.default.Router();
-router.get('/ping', sample_1.default.sampleHealthCheck);
-router.get('/nyc', sample_1.default.anotherSampleCheck);
+router.get('/buy', buy_1.default.buy);
 module.exports = router;
 //# sourceMappingURL=sample.js.map
