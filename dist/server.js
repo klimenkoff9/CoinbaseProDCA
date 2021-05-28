@@ -7,7 +7,7 @@ const http_1 = __importDefault(require("http"));
 const express_1 = __importDefault(require("express"));
 const logging_1 = __importDefault(require("./config/logging"));
 const config_1 = __importDefault(require("./config/config"));
-const sample_1 = __importDefault(require("./routes/sample"));
+const coinbase_1 = __importDefault(require("./routes/coinbase"));
 const NAMESPACE = 'Server';
 const router = express_1.default();
 router.use((req, res, next) => {
@@ -28,8 +28,8 @@ router.use((req, res, next) => {
     }
     next();
 });
-router.use('/sample', sample_1.default);
-router.use((req, res) => {
+router.use('/coin', coinbase_1.default);
+router.use((_req, res) => {
     const error = new Error('not found');
     return res.status(404).json({
         message: error.message

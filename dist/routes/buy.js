@@ -7,4 +7,4 @@ const buy_1 = __importDefault(require("../controllers/buy"));
 const router = express_1.default.Router();
 router.get('/buy', buy_1.default.buy);
 module.exports = router;
-//# sourceMappingURL=sample.js.map
+//# sourceMappingURL=buy.js.map

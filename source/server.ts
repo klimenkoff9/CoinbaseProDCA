@@ -2,7 +2,7 @@ import http from 'http';
 import express from 'express';
 import logging from './config/logging';
 import config from './config/config';
-import sampleRoutes from './routes/sample';
+import sampleRoutes from './routes/coinbase';
 
 const NAMESPACE = 'Server';
 const router = express();
@@ -39,11 +39,11 @@ router.use((req, res, next) => {
 });
 
 /* Routes */
-router.use('/sample', sampleRoutes);
+router.use('/coin', sampleRoutes);
 
 /* Error Handling */
 
-router.use((req, res) => {
+router.use((_req, res) => {
     const error = new Error('not found');
 
     return res.status(404).json({

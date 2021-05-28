@@ -8,20 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const coinbase_pro_node_1 = require("coinbase-pro-node");
-const logging_1 = __importDefault(require("../config/logging"));
-const NAMESPACE = 'Sample Controller';
-const sampleHealthCheck = (req, res, next) => {
-    logging_1.default.info(NAMESPACE, `Sample health check route called.`);
-    return res.status(200).json({
-        message: 'pong'
-    });
-};
-const buy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const buy = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const auth = {
             apiKey: `${process.env.KEY}`,
@@ -49,4 +38,4 @@ const buy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
 exports.default = {
     buy
 };
-//# sourceMappingURL=sample.js.map
+//# sourceMappingURL=buy.js.map
