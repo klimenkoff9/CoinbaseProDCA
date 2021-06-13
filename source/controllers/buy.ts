@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { CoinbasePro, MarketOrder, OrderSide, OrderType } from 'coinbase-pro-node';
 var cron = require('node-cron');
 
+let task = cron;
+
 const buy = (_req: Request, res: Response, next: NextFunction) => {
     try {
         const auth = {
@@ -19,9 +21,10 @@ const buy = (_req: Request, res: Response, next: NextFunction) => {
             funds: '50'
         };
         console.log('check');
-        cron.schedule(
-            '*/1 * * * *',
-             () => {
+
+        task = cron.schedule(
+            '* */2 * * *',
+            () => {
                 client.rest.order.placeOrder(order);
                 console.log('bought');
             },
@@ -31,6 +34,17 @@ const buy = (_req: Request, res: Response, next: NextFunction) => {
             }
         );
 
+        return res.status(200).json({
+            message: 'Success'
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const stop = (_req: Request, res: Response, next: NextFunction) => {
+    try {
+        task.stop();
         return res.status(200).json({
             message: 'Success'
         });

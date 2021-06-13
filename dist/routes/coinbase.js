@@ -6,5 +6,6 @@ const express_1 = __importDefault(require("express"));
 const buy_1 = __importDefault(require("../controllers/buy"));
 const router = express_1.default.Router();
 router.get('/buy', buy_1.default.buy);
+router.get('/stop', buy_1.default.stop);
 module.exports = router;
 //# sourceMappingURL=coinbase.js.map
