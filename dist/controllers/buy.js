@@ -1,16 +1,9 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const coinbase_pro_node_1 = require("coinbase-pro-node");
-const buy = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+var cron = require('node-cron');
+let task = cron;
+const buy = (_req, res, next) => {
     try {
         const auth = {
             apiKey: `${process.env.KEY}`,
@@ -23,9 +16,16 @@ const buy = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
             type: coinbase_pro_node_1.OrderType.MARKET,
             product_id: 'BTC-USD',
             side: coinbase_pro_node_1.OrderSide.BUY,
-            funds: '25'
+            funds: '50'
         };
-        yield client.rest.order.placeOrder(order);
+        console.log('check');
+        task = cron.schedule('* */2 * * *', () => {
+            client.rest.order.placeOrder(order);
+            console.log('bought');
+        }, {
+            scheduled: true,
+            timezone: 'America/New_York'
+        });
         return res.status(200).json({
             message: 'Success'
         });
@@ -33,9 +33,20 @@ const buy = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
     catch (error) {
         next(error);
     }
-    ;
-});
+};
+const stop = (_req, res, next) => {
+    try {
+        task.stop();
+        return res.status(200).json({
+            message: 'Success'
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+};
 exports.default = {
-    buy
+    buy,
+    stop
 };
 //# sourceMappingURL=buy.js.map
